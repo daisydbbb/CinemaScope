@@ -10,6 +10,7 @@ export default function App() {
   const [query, setQuery] = useState("");
   const [movies, setMovies] = useState([]);
   // const [watched, setWatched] = useState([]);
+  // create state using callback function
   const [watched, setWatched] = useState(function () {
     const storedValue = localStorage.getItem("watched");
     return storedValue ? JSON.parse(storedValue) : [];
@@ -82,7 +83,7 @@ export default function App() {
         controller.abort();
       };
     },
-    [query]
+    [query, error]
   );
 
   return (
@@ -233,7 +234,7 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
     Runtime: runtime,
     imdbRating,
     Plot: plot,
-    Releasaed: released,
+    Released: released,
     Actors: actors,
     Director: director,
     Genre: genre,
@@ -294,7 +295,7 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
         document.title = "Cinema Scope";
       };
     },
-    [movie]
+    [title]
   );
 
   return (
@@ -321,7 +322,7 @@ function MovieDetails({ selectedId, onCloseMovie, onAddWatched, watched }) {
               <p>{genre}</p>
               <p>
                 <span>🌟</span>
-                {imdbRating}
+                {imdbRating} IMDB rating
               </p>
             </div>
           </header>
@@ -382,7 +383,7 @@ function WatchedSummary({ watched }) {
         </p>
         <p>
           <span>⏳</span>
-          <span>{avgRuntime} min</span>
+          <span>{avgRuntime.toFixed(2)} min</span>
         </p>
       </div>
     </div>
